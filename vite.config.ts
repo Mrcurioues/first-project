@@ -12,7 +12,7 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
-  cloudflare: (process.env.VERCEL || process.env.RENDER) ? false : undefined,
+  cloudflare: (process.env.CF_PAGES || process.env.CLOUDFLARE) ? undefined : false,
   vite: {
     preview: {
       port: process.env.PORT ? parseInt(process.env.PORT) : 4173,
