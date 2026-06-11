@@ -13,4 +13,10 @@ export default defineConfig({
     server: { entry: "server" },
   },
   cloudflare: (process.env.VERCEL || process.env.RENDER) ? false : undefined,
+  vite: {
+    preview: {
+      port: process.env.PORT ? parseInt(process.env.PORT) : 4173,
+      host: true,
+    },
+  },
 });
