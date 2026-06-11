@@ -12,9 +12,10 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import logoImg from "@/assets/logo.png";
 
 export const Route = createFileRoute("/staff")({
-  head: () => ({ meta: [{ title: "Staff Dashboard — Smile Dental" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Staff Dashboard — Awasthi Dental" }, { name: "robots", content: "noindex" }] }),
   component: StaffLayout,
 });
 
@@ -64,9 +65,9 @@ function StaffLayout() {
       <aside className="border-r border-border bg-card flex flex-col">
         <div className="px-5 py-5 border-b border-border">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-warm flex items-center justify-center text-primary-foreground text-xs font-bold">SD</div>
+            <img src={logoImg} alt="Awasthi Dental Clinic Logo" className="w-8 h-8 object-contain rounded-full border border-border" />
             <div>
-              <div className="font-display font-bold text-accent leading-tight">Smile Dental</div>
+              <div className="font-display font-bold text-accent leading-tight">Awasthi Dental</div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Staff Portal</div>
             </div>
           </Link>

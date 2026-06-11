@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import { syncUnlinkedAppointments } from "@/lib/booking-store";
+import { sendAppointmentEmail } from "@/lib/resend";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -61,6 +63,11 @@ type DoctorStatus = {
   shifts: string;
 };
 
+type PendingInvoice = Database["public"]["Tables"]["billing_invoices"]["Row"] & {
+  patient_name: string;
+  patient_phone: string;
+};
+
 function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -84,7 +91,7 @@ function Dashboard() {
   const [showAddPatient, setShowAddPatient] = useState(false);
   const [showAddAppt, setShowAddAppt] = useState(false);
   const [showFollowUpModal, setShowFollowUpModal] = useState(false);
-  const [pendingInvoices, setPendingInvoices] = useState<any[]>([]);
+  const [pendingInvoices, setPendingInvoices] = useState<PendingInvoice[]>([]);
 
   // Forms
   const [patForm, setPatForm] = useState({
@@ -484,6 +491,31 @@ function Dashboard() {
 
       if (error) throw error;
       toast.success(`Appointment status updated to ${newStatus}`);
+
+      // Trigger confirmation email if approved
+      if (newStatus === "approved") {
+        try {
+          const { data: appt } = await supabase
+            .from("appointments")
+            .select("*")
+            .eq("id", apptId)
+            .single();
+          if (appt && appt.patient_email) {
+            sendAppointmentEmail({
+              id: appt.id,
+              reference_id: appt.reference_id,
+              patient_name: appt.patient_name,
+              patient_email: appt.patient_email,
+              service: appt.service,
+              doctor_name: appt.doctor_name,
+              scheduled_at: appt.scheduled_at,
+            }, "approved").catch(err => console.error("Error sending approval email:", err));
+          }
+        } catch (err) {
+          console.error("Error fetching appointment for email notification:", err);
+        }
+      }
+
       loadData();
     } catch (err: any) {
       toast.error(err.message);
@@ -548,6 +580,20 @@ function Dashboard() {
       if (selected) {
         patName = selected.name;
         patPhone = selected.phone;
+
+        // Fetch existing patient email from database
+        try {
+          const { data: pRec } = await supabase
+            .from("patients")
+            .select("email")
+            .eq("id", apptForm.patient_id)
+            .single();
+          if (pRec && pRec.email) {
+            patEmail = pRec.email;
+          }
+        } catch (e) {
+          console.error("Error fetching patient email:", e);
+        }
       }
     } else {
       patName = apptForm.walkin_name;
@@ -611,8 +657,23 @@ function Dashboard() {
         status: "approved" as const
       };
 
-      const { error } = await supabase.from("appointments").insert([apptData]);
+      const { data: insertedData, error } = await supabase.from("appointments").insert([apptData]).select("id");
       if (error) throw error;
+
+      const apptId = insertedData && insertedData.length > 0 ? insertedData[0].id : undefined;
+
+      // Trigger Resend confirmation email if patient has an email
+      if (patEmail) {
+        sendAppointmentEmail({
+          id: apptId,
+          reference_id: apptData.reference_id,
+          patient_name: apptData.patient_name,
+          patient_email: apptData.patient_email,
+          service: apptData.service,
+          doctor_name: apptData.doctor_name,
+          scheduled_at: apptData.scheduled_at,
+        }, "approved").catch(err => console.error("Error sending booking email:", err));
+      }
 
       toast.success("Appointment scheduled successfully!");
       setShowAddAppt(false);
@@ -638,7 +699,7 @@ function Dashboard() {
       return toast.error("Patient phone number not available!");
     }
 
-    const msg = `Namaste ${invoice.patient_name}! Friendly reminder from Smile Dental Clinic regarding outstanding payment of ₹${invoice.due_amount} for invoice ${invoice.invoice_number}. Thank you!`;
+    const msg = `Namaste ${invoice.patient_name} ji 🙏, hope you are keeping well! A gentle reminder from Awasthi Dental Clinic. There is a pending balance of ₹${invoice.due_amount} for your treatment invoice ${invoice.invoice_number}. We request you to kindly clear it at your convenience. If you have already paid, please ignore this. Dhanyavaad and keep smiling! 😊✨`;
     let cleanPhone = invoice.patient_phone.replace(/\D/g, "");
     if (cleanPhone.length === 10) cleanPhone = "91" + cleanPhone;
 

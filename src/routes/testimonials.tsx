@@ -7,9 +7,9 @@ import { resolveImage } from "@/lib/image-registry";
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
     meta: [
-      { title: "Patient Testimonials — Smile Dental Clinic" },
+      { title: "Patient Testimonials — Awasthi Dental Clinic" },
       { name: "description", content: "Real stories from real patients across India. See video testimonials and smile transformations." },
-      { property: "og:title", content: "Patient Testimonials — Smile Dental Clinic" },
+      { property: "og:title", content: "Patient Testimonials — Awasthi Dental Clinic" },
       { property: "og:description", content: "Real stories from happy patients across India." },
     ],
   }),

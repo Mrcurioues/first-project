@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { sendAppointmentEmail } from "@/lib/resend";
 
 export const Route = createFileRoute("/staff/appointments")({ component: Page });
 
@@ -32,6 +33,31 @@ function Page() {
     const { error } = await supabase.from("appointments").update({ status: status as any }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success(`Marked ${status}`);
+
+    // Trigger confirmation email if approved
+    if (status === "approved") {
+      try {
+        const { data: appt } = await supabase
+          .from("appointments")
+          .select("*")
+          .eq("id", id)
+          .single();
+        if (appt && appt.patient_email) {
+          sendAppointmentEmail({
+            id: appt.id,
+            reference_id: appt.reference_id,
+            patient_name: appt.patient_name,
+            patient_email: appt.patient_email,
+            service: appt.service,
+            doctor_name: appt.doctor_name,
+            scheduled_at: appt.scheduled_at,
+          }, "approved").catch(err => console.error("Error sending approval email:", err));
+        }
+      } catch (err) {
+        console.error("Error fetching appointment for email notification:", err);
+      }
+    }
+
     load();
   }
   async function del(id: string) {

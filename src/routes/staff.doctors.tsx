@@ -540,7 +540,7 @@ function DoctorsPage() {
                     disabled={selectedDoctor !== null && !editMode}
                     value={form.email || ""}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    placeholder="rajesh@smiledental.com"
+                    placeholder="rajesh@awasthidentalclinic.com"
                     className="rounded-xl border-border"
                   />
                 </div>

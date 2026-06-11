@@ -5,6 +5,7 @@ import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { listServicesWithItems } from "@/lib/content";
 import { useBooking } from "@/components/BookingDialog";
 import { resolveImage } from "@/lib/image-registry";
+import logoImg from "@/assets/logo.png";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -19,9 +20,9 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-background/85 backdrop-blur border-b border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-full bg-gradient-warm flex items-center justify-center text-primary-foreground font-bold">SD</div>
+          <img src={logoImg} alt="Awasthi Dental Clinic Logo" className="w-10 h-10 object-contain rounded-full border border-border" />
           <div className="leading-tight">
-            <div className="font-display text-lg font-bold text-accent">Smile Dental</div>
+            <div className="font-display text-lg font-bold text-accent">Awasthi Dental</div>
             <div className="text-[10px] tracking-widest text-muted-foreground uppercase">Care · Comfort · Confidence</div>
           </div>
         </Link>

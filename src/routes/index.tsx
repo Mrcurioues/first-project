@@ -10,10 +10,10 @@ import { DoctorProfileDialog } from "@/components/DoctorProfileDialog";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Smile India Dental Clinic — Best Dental Clinic, Expert Dentists & Painless Dental Care" },
-      { name: "description", content: "Smile India Dental Clinic is the best dental clinic in India, offering painless root canal treatment (RCT), dental implants, clear aligners (Invisalign), braces, teeth whitening, and complete family dental care." },
-      { property: "og:title", content: "Smile India Dental Clinic — Best Dental Clinic, Expert Dentists & Painless Dental Care" },
-      { property: "og:description", content: "Smile India Dental Clinic is the best dental clinic in India, offering painless root canal treatment (RCT), dental implants, clear aligners (Invisalign), braces, teeth whitening, and complete family dental care." },
+      { title: "True Dental Care by Awasthi Dental Clinic — Best Dental Clinic & Painless Dental Care in Lucknow" },
+      { name: "description", content: "True Dental Care by Awasthi Dental Clinic is the best dental clinic in Lucknow, offering painless root canal treatment (RCT), dental implants, clear aligners, braces, teeth whitening, and complete family dental care." },
+      { property: "og:title", content: "True Dental Care by Awasthi Dental Clinic — Best Dental Clinic & Painless Dental Care in Lucknow" },
+      { property: "og:description", content: "True Dental Care by Awasthi Dental Clinic is the best dental clinic in Lucknow, offering painless root canal treatment (RCT), dental implants, clear aligners, braces, teeth whitening, and complete family dental care." },
     ],
   }),
   component: Index,
@@ -25,10 +25,10 @@ function Index() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Dentist",
-    "name": "Smile India Dental Clinic",
+    "name": "True Dental Care by Awasthi Dental Clinic",
     "image": "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cf920a84-81de-4ad2-bc50-4a0a6a796353/id-preview-c79712f8--48fe5d8e-c30e-4252-a03e-eb3255f2bb9b.lovable.app-1778958638151.png",
-    "@id": "https://smiledental.in",
-    "url": "https://smiledental.in",
+    "@id": "https://awasthidentalclinic.com",
+    "url": "https://awasthidentalclinic.com",
     "telephone": "+919999999999",
     "priceRange": "$$",
     "address": {
@@ -65,8 +65,8 @@ function Index() {
       }
     ],
     "sameAs": [
-      "https://www.facebook.com/smileindiadentalclinic",
-      "https://www.instagram.com/smileindiadentalclinic"
+      "https://www.facebook.com/dr.pnkjAwasthi",
+      "https://www.instagram.com/awasthi_dental_clinic"
     ]
   };
 
@@ -110,7 +110,7 @@ function Index() {
           </div>
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-hero rounded-3xl blur-2xl opacity-30" />
-            <img src={heroImg} alt="Smile Dental Clinic" width={1536} height={1024} className="relative rounded-3xl shadow-warm w-full object-cover aspect-[4/3]" />
+            <img src={heroImg} alt="Awasthi Dental Clinic" width={1536} height={1024} className="relative rounded-3xl shadow-warm w-full object-cover aspect-[4/3]" />
             <div className="absolute -bottom-5 -left-5 bg-card rounded-2xl shadow-soft px-5 py-3 flex items-center gap-3 border border-border">
               <ShieldCheck className="w-8 h-8 text-secondary" />
               <div>
@@ -181,11 +181,7 @@ function Index() {
 
                   {/* Content Section */}
                   <div className="p-7 flex flex-col flex-1">
-                    <h3
-                      className={`font-serif text-2xl font-bold leading-snug ${
-                        cat.category === "Restorative Treatments" ? "text-[#D97706]" : "text-accent"
-                      }`}
-                    >
+                    <h3 className="font-serif text-2xl font-bold leading-snug text-accent">
                       {cat.tagline}
                     </h3>
                     
@@ -197,14 +193,14 @@ function Index() {
 
                     {/* Core Treatments Header */}
                     <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-muted-foreground uppercase leading-none">
-                      <span className="text-[#D97706] text-base leading-none">•</span> Core Treatments
+                      <span className="text-primary text-base leading-none">•</span> Core Treatments
                     </div>
 
                     {/* Treatments List with Sparkle Bullets */}
                     <ul className="mt-4 space-y-2.5 flex-1">
                       {cat.items.map((it) => (
                         <li key={it.name} className="flex items-start gap-2.5 text-sm text-foreground/90 font-medium">
-                          <span className="text-[#D97706] mt-0.5 shrink-0">
+                          <span className="text-primary mt-0.5 shrink-0">
                             <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
                               <path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" />
                             </svg>
@@ -219,7 +215,7 @@ function Index() {
                       <Link
                         to="/services/$slug"
                         params={{ slug: cat.items[0]?.slug ?? "" }}
-                        className="w-full flex items-center justify-center gap-2 py-3 rounded-full bg-[#E6F4F4] text-[#008080] font-semibold text-sm hover:bg-[#d5eeee] transition-colors"
+                        className="w-full flex items-center justify-center gap-2 py-3 rounded-full bg-primary/10 text-primary font-semibold text-sm hover:bg-primary/20 transition-colors"
                       >
                         Explore Details <span className="text-base">→</span>
                       </Link>

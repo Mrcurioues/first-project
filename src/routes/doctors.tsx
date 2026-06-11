@@ -6,10 +6,10 @@ import { BookButton } from "@/components/BookButton";
 export const Route = createFileRoute("/doctors")({
   head: () => ({
     meta: [
-      { title: "Best Dentists & Dental Specialists — Smile India Dental Clinic" },
-      { name: "description", content: "Meet our panel of highly qualified and experienced dentists at Smile India Dental Clinic. Specialists in dental implants, orthodontics, cosmetic dentistry, and root canal therapy." },
-      { property: "og:title", content: "Best Dentists & Dental Specialists — Smile India Dental Clinic" },
-      { property: "og:description", content: "Meet our panel of highly qualified and experienced dentists at Smile India Dental Clinic. Specialists in dental implants, orthodontics, cosmetic dentistry, and root canal therapy." },
+      { title: "Best Dentists & Dental Specialists — True Dental Care by Awasthi Dental Clinic" },
+      { name: "description", content: "Meet our panel of highly qualified and experienced dentists at True Dental Care by Awasthi Dental Clinic. Specialists in dental implants, orthodontics, cosmetic dentistry, and root canal therapy." },
+      { property: "og:title", content: "Best Dentists & Dental Specialists — True Dental Care by Awasthi Dental Clinic" },
+      { property: "og:description", content: "Meet our panel of highly qualified and experienced dentists at True Dental Care by Awasthi Dental Clinic. Specialists in dental implants, orthodontics, cosmetic dentistry, and root canal therapy." },
     ],
   }),
   component: DoctorsPage,

@@ -15,7 +15,7 @@ export const Route = createFileRoute("/services_/$slug")({
   },
   head: ({ loaderData }) => {
     const a = loaderData?.article;
-    if (!a) return { meta: [{ title: "Service — Smile Dental" }] };
+    if (!a) return { meta: [{ title: "Service — Awasthi Dental" }] };
     const heroUrl = resolveImage(a.hero_image_key);
     return {
       meta: [

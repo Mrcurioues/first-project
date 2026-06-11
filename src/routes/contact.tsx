@@ -8,15 +8,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AppointmentForm } from "@/components/AppointmentForm";
-import { supabase } from "@/integrations/supabase/client";
+import { submitEnquiryRpc } from "@/lib/booking.server";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Book Dental Appointment & Contact — Smile India Dental Clinic" },
-      { name: "description", content: "Book a dental appointment online or get in touch with Smile India Dental Clinic. Located at MG Road, Connaught Place, New Delhi. Call us or chat on WhatsApp for free consultation." },
-      { property: "og:title", content: "Book Dental Appointment & Contact — Smile India Dental Clinic" },
-      { property: "og:description", content: "Book a dental appointment online or get in touch with Smile India Dental Clinic. Located at MG Road, Connaught Place, New Delhi. Call us or chat on WhatsApp for free consultation." },
+      { title: "Book Dental Appointment & Contact — True Dental Care by Awasthi Dental Clinic" },
+      { name: "description", content: "Book a dental appointment online or get in touch with True Dental Care by Awasthi Dental Clinic. Located at MG Road, Connaught Place, New Delhi. Call us or chat on WhatsApp for free consultation." },
+      { property: "og:title", content: "Book Dental Appointment & Contact — True Dental Care by Awasthi Dental Clinic" },
+      { property: "og:description", content: "Book a dental appointment online or get in touch with True Dental Care by Awasthi Dental Clinic. Located at MG Road, Connaught Place, New Delhi. Call us or chat on WhatsApp for free consultation." },
     ],
   }),
   component: ContactPage,
@@ -116,7 +116,7 @@ function ContactPage() {
             </div>
             <div className="bg-card rounded-2xl border border-border p-6 shadow-soft space-y-2 text-sm">
               <div className="flex items-center gap-2"><Phone className="w-4 h-4 text-primary" /> {PHONE_DISPLAY}</div>
-              <div className="flex items-center gap-2"><Mail className="w-4 h-4 text-primary" /> care@smiledental.in</div>
+              <div className="flex items-center gap-2"><Mail className="w-4 h-4 text-primary" /> care@awasthidentalclinic.com</div>
             </div>
 
             {/* Injected Enquiry form here in the empty space below contact info */}
@@ -141,7 +141,7 @@ function ContactPage() {
           </div>
           <div className="rounded-3xl overflow-hidden shadow-warm border border-border">
             <iframe
-              title="Smile Dental Clinic location"
+              title="Awasthi Dental Clinic location"
               src="https://www.google.com/maps?q=Connaught+Place+New+Delhi&output=embed"
               width="100%"
               height="420"
@@ -182,19 +182,13 @@ function EnquiryForm() {
     setErrors({});
     setSubmitting(true);
     setSent(false);
-
     try {
-      const { error } = await supabase.from("contact_messages").insert({
+      await submitEnquiryRpc({
         name: result.data.name,
         email: result.data.email,
         message: result.data.message,
         subject: "Website Enquiry",
       });
-
-      if (error) {
-        toast.error(`Failed to send enquiry: ${error.message}`);
-        return;
-      }
 
       setSent(true);
       toast.success("Enquiry sent! We'll reply within 24 hours.");

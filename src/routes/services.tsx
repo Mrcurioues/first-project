@@ -9,10 +9,10 @@ import { getServicePrice } from "@/data/services";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Comprehensive Dental Treatments & Services — Smile India Dental Clinic" },
-      { name: "description", content: "Explore complete dental services at Smile India Dental Clinic. Painless root canal treatment (RCT), dental implants, clear aligners (Invisalign), braces, teeth cleaning & whitening, pediatric care & more." },
-      { property: "og:title", content: "Comprehensive Dental Treatments & Services — Smile India Dental Clinic" },
-      { property: "og:description", content: "Explore complete dental services at Smile India Dental Clinic. Painless root canal treatment (RCT), dental implants, clear aligners (Invisalign), braces, teeth cleaning & whitening, pediatric care & more." },
+      { title: "Comprehensive Dental Treatments & Services — True Dental Care by Awasthi Dental Clinic" },
+      { name: "description", content: "Explore complete dental services at True Dental Care by Awasthi Dental Clinic. Painless root canal treatment (RCT), dental implants, clear aligners, braces, teeth cleaning & whitening, pediatric care & more." },
+      { property: "og:title", content: "Comprehensive Dental Treatments & Services — True Dental Care by Awasthi Dental Clinic" },
+      { property: "og:description", content: "Explore complete dental services at True Dental Care by Awasthi Dental Clinic. Painless root canal treatment (RCT), dental implants, clear aligners, braces, teeth cleaning & whitening, pediatric care & more." },
     ],
   }),
   component: ServicesPage,
@@ -26,7 +26,7 @@ function ServicesPage() {
 
   return (
     <>
-      <section className="bg-[hsl(36_40%_97%)] py-20">
+      <section className="bg-gradient-soft/50 py-20 dark:bg-none dark:bg-muted/10">
         <div className="mx-auto max-w-7xl px-6">
           <div className="text-center max-w-2xl mx-auto">
             <span className="inline-block text-[11px] tracking-[0.2em] font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
@@ -51,7 +51,7 @@ function ServicesPage() {
                 <div className="overflow-hidden h-52">
                   <img
                     src={resolveImage(cat.image_key)}
-                    alt={`${cat.category} at Smile Dental Clinic`}
+                    alt={`${cat.category} at Awasthi Dental Clinic`}
                     width={600}
                     height={400}
                     loading="lazy"
@@ -114,7 +114,7 @@ function ServicesPage() {
         </div>
       </section>
 
-      <section className="pb-20 bg-[hsl(36_40%_97%)]">
+      <section className="pb-20 bg-gradient-soft/50 dark:bg-none dark:bg-muted/10">
         <div className="mx-auto max-w-4xl px-6">
           <div className="rounded-3xl bg-accent text-accent-foreground p-10 text-center shadow-warm">
             <h3 className="text-2xl font-bold">Not sure which treatment you need?</h3>

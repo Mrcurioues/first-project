@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/staff_/login")({
-  head: () => ({ meta: [{ title: "Staff Login — Smile Dental" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Staff Login — Awasthi Dental" }, { name: "robots", content: "noindex" }] }),
   component: LoginPage,
 });
 
@@ -43,13 +43,13 @@ function LoginPage() {
           className="text-white px-6 py-6 text-center"
           style={{ background: "linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%)" }}
         >
-          <div className="text-xs uppercase tracking-widest opacity-90">Smile Dental Clinic</div>
+          <div className="text-xs uppercase tracking-widest opacity-90">Awasthi Dental Clinic</div>
           <h1 className="font-display text-2xl mt-1 text-white">Staff Sign In</h1>
         </div>
         <form onSubmit={onSubmit} className="p-6 space-y-4">
           <div className="space-y-1.5">
             <Label>Email</Label>
-            <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="staff@smiledental.in" />
+            <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="staff@awasthidentalclinic.com" />
           </div>
           <div className="space-y-1.5">
             <Label>Password</Label>

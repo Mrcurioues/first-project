@@ -1533,7 +1533,7 @@ function PatientsCRMPage() {
             <div id="printable-receipt" className="space-y-5 flex-1 overflow-y-auto pr-1">
               {/* Receipt Header */}
               <div className="text-center border-b border-border/60 pb-4">
-                <div className="font-display font-black text-accent text-lg">SMILE DENTAL CLINIC</div>
+                <div className="font-display font-black text-accent text-lg">AWASTHI DENTAL CLINIC</div>
                 <div className="text-[10px] text-muted-foreground tracking-wide mt-0.5">
                   Multi-specialty Dental Care · New Delhi
                 </div>

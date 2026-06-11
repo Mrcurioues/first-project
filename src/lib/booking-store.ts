@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { services } from "@/data/services";
 import { supabase } from "@/integrations/supabase/client";
+import { saveBookingRpc } from "./booking.server";
 
 export type Booking = {
   ref: string;
@@ -99,71 +100,9 @@ export async function saveBooking(
   b: Omit<Booking, "ref" | "createdAt" | "date"> & { date: Date | string }
 ): Promise<Booking> {
   const dateStr = typeof b.date === "string" ? b.date : format(b.date, "yyyy-MM-dd");
-  const dateObj = typeof b.date === "string" ? new Date(b.date) : b.date;
-  const scheduledAt = parseSlotToDate(dateStr, b.time);
-  const ref = generateRef(dateObj);
-
-  // Resolve or create patient in the database to link to Patient CRM
-  let resolvedPatientId: string | null = null;
-  const cleanedPhone = b.phone.trim();
-
-  if (cleanedPhone) {
-    const { data: existingPatients, error: searchErr } = await supabase
-      .from("patients")
-      .select("id")
-      .eq("phone", cleanedPhone)
-      .limit(1);
-
-    if (!searchErr && existingPatients && existingPatients.length > 0) {
-      resolvedPatientId = existingPatients[0].id;
-      if (b.address?.trim()) {
-        await supabase
-          .from("patients")
-          .update({ address: b.address.trim() })
-          .eq("id", resolvedPatientId);
-      }
-    } else {
-      const { data: newPatient, error: createErr } = await supabase
-        .from("patients")
-        .insert({
-          full_name: b.name.trim(),
-          phone: cleanedPhone,
-          email: b.email?.trim() || null,
-          address: b.address?.trim() || null,
-          primary_service: b.service,
-          tags: ["Online Booking"],
-        })
-        .select("id");
-
-      if (!createErr && newPatient && newPatient.length > 0) {
-        resolvedPatientId = newPatient[0].id;
-      }
-    }
-  }
-
-  const { error } = await supabase.from("appointments").insert({
-    reference_id: ref,
-    patient_id: resolvedPatientId,
-    patient_name: b.name,
-    patient_phone: b.phone,
-    patient_email: b.email || null,
-    service: b.service,
-    doctor_name: b.doctor || null,
-    doctor_id: b.doctor_id || null,
-    scheduled_at: scheduledAt.toISOString(),
-    notes: b.notes || null,
-    status: "pending",
-  });
-  if (error) throw new Error(error.message);
-
-  // Update cache
-  const cacheKey = dateStr;
-  const set = bookedCache.get(cacheKey) ?? new Set<string>();
-  set.add(b.time);
-  bookedCache.set(cacheKey, set);
-
-  return {
-    ref,
+  
+  // Call the server RPC function to perform the insert and rate checks
+  const booking = await saveBookingRpc({
     name: b.name,
     phone: b.phone,
     email: b.email,
@@ -174,8 +113,15 @@ export async function saveBooking(
     date: dateStr,
     time: b.time,
     notes: b.notes,
-    createdAt: new Date().toISOString(),
-  };
+  });
+
+  // Update cache
+  const cacheKey = dateStr;
+  const set = bookedCache.get(cacheKey) ?? new Set<string>();
+  set.add(b.time);
+  bookedCache.set(cacheKey, set);
+
+  return booking;
 }
 
 export function getDoctorForService(serviceName: string): string | undefined {

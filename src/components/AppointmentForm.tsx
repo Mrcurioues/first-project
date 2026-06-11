@@ -14,6 +14,7 @@ import { services } from "@/data/services";
 import { doctors } from "@/data/doctors";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
 import {
   TIME_SLOTS,
   getBookedTimesForDate,
@@ -24,6 +25,9 @@ import {
   refreshBookedForDate,
   type Booking,
 } from "@/lib/booking-store";
+
+type DoctorRow = Database["public"]["Tables"]["doctors"]["Row"];
+type DoctorShiftRow = Database["public"]["Tables"]["doctor_shifts"]["Row"];
 
 function parseTimeToMinutes(timeStr: string): number {
   if (!timeStr) return 0;
@@ -86,8 +90,8 @@ export function AppointmentForm({ defaultService, defaultDoctor, onSuccess, comp
   const [submitting, setSubmitting] = useState(false);
   const [, setBookedTick] = useState(0);
 
-  const [dbDoctors, setDbDoctors] = useState<any[]>([]);
-  const [shifts, setShifts] = useState<any[]>([]);
+  const [dbDoctors, setDbDoctors] = useState<DoctorRow[]>([]);
+  const [shifts, setShifts] = useState<DoctorShiftRow[]>([]);
   const [hasShiftsConfigured, setHasShiftsConfigured] = useState(false);
   const [doctorBookedTimes, setDoctorBookedTimes] = useState<string[]>([]);
   const [loadingBookings, setLoadingBookings] = useState(false);
