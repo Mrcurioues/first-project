@@ -17,7 +17,6 @@ export const Route = createFileRoute("/testimonials")({
 });
 
 const videos = [
-  { id: "Ke90Tje7VS0", title: "Anjali's Smile Makeover Journey" },
   { id: "ScMzIvxBSi4", title: "Painless Root Canal Experience" },
 ];
 

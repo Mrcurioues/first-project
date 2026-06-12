@@ -290,9 +290,6 @@ function Index() {
               </div>
             ))}
           </div>
-          <div className="mt-12 max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-warm aspect-video bg-accent">
-            <iframe className="w-full h-full" src="https://www.youtube.com/embed/Ke90Tje7VS0?rel=0" title="Patient Testimonial Video" allow="autoplay; encrypted-media" allowFullScreen />
-          </div>
         </div>
       </section>
 
