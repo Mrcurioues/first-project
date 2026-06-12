@@ -343,7 +343,9 @@ export function AppointmentForm({ defaultService, defaultDoctor, onSuccess, comp
       setSubmitted(booking);
       onSuccess?.(booking);
     } catch (err) {
-      toast.error("Could not save appointment. Please try again.");
+      console.error("Failed to save appointment:", err);
+      const message = err instanceof Error ? err.message : (typeof err === "object" && err && "message" in err ? String((err as any).message) : "");
+      toast.error(message ? `Could not save appointment: ${message}` : "Could not save appointment. Please try again.");
     } finally {
       setSubmitting(false);
     }
