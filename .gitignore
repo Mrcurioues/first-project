@@ -31,4 +31,6 @@ dist-ssr
 # Environments
 .env
 .env.*
+scratch/
+*.log
 
