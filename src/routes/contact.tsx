@@ -184,10 +184,12 @@ function EnquiryForm() {
     setSent(false);
     try {
       await submitEnquiryRpc({
-        name: result.data.name,
-        email: result.data.email,
-        message: result.data.message,
-        subject: "Website Enquiry",
+        data: {
+          name: result.data.name,
+          email: result.data.email,
+          message: result.data.message,
+          subject: "Website Enquiry",
+        }
       });
 
       setSent(true);

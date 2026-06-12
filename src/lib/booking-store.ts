@@ -103,16 +103,18 @@ export async function saveBooking(
   
   // Call the server RPC function to perform the insert and rate checks
   const booking = await saveBookingRpc({
-    name: b.name,
-    phone: b.phone,
-    email: b.email,
-    address: b.address,
-    service: b.service,
-    doctor: b.doctor,
-    doctor_id: b.doctor_id,
-    date: dateStr,
-    time: b.time,
-    notes: b.notes,
+    data: {
+      name: b.name,
+      phone: b.phone,
+      email: b.email,
+      address: b.address,
+      service: b.service,
+      doctor: b.doctor,
+      doctor_id: b.doctor_id,
+      date: dateStr,
+      time: b.time,
+      notes: b.notes,
+    }
   });
 
   // Update cache
